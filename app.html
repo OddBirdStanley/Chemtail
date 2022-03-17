@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>ChemTail</title>
+        <link rel="stylesheet" href="style.css">
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+        <script>
+            window.MathJax = {
+                tex: {
+                    packages: {
+                        '[+]': ['mhchem']
+                    }
+                },
+                loader: {
+                    load: ['[tex]/mhchem']
+                }
+            };
+        </script>
+        <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    </head>
+    <body>
+        <div id="control">
+            <div id="output">
+                <div id="banner">
+                    <svg viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" width="200" height="200"><path d="M682.666667 955.733333H341.333333a17.066667 17.066667 0 1 1 0-34.133333h154.453334V604.416L158.6176 268.0832A17.032533 17.032533 0 0 1 170.666667 238.933333h505.7536l164.8128-165.649066a17.066667 17.066667 0 1 1 24.200533 24.098133L724.565333 238.933333H853.333333a17.066667 17.066667 0 0 1 12.0832 29.115734L529.92 604.381867V921.6H682.666667a17.066667 17.066667 0 1 1 0 34.133333zM211.933867 273.066667l300.868266 300.1344L812.202667 273.066667h-121.617067l-165.666133 165.666133a17.0496 17.0496 0 1 1-24.132267-24.132267L642.321067 273.066667H211.933867z" fill="#d81e06"></path><path d="M477.013333 461.653333A47.6672 47.6672 0 0 1 462.506667 426.666667c0-14.216533 4.829867-26.453333 14.506666-36.693334 9.659733-9.1136 21.623467-13.653333 35.84-13.653333 14.2336 0 25.890133 4.5568 34.986667 13.653333 10.24 10.24 15.36 22.4768 15.36 36.693334 0 13.653333-5.12 25.309867-15.36 34.986666-9.096533 10.24-20.753067 15.36-34.986667 15.36-14.216533 0-26.1632-5.12-35.84-15.36z" fill="#d81e06"></path></svg>
+                    <div>
+                        <h1>ChemTail</h1>
+                        <h2>A chemical cocktail.</h2>
+                    </div>
+                </div>
+                <canvas id="frame"></canvas>
+                <span id="equation">None</span>
+            </div>
+            <div id="control-panel">
+                <svg viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" width="200" height="200"><path d="M933.863608 395.431098l21.4925-51.531654-57.129138-35.729759c2.503007-16.072047 2.503007-32.057113 0.220011-47.774073L955.535187 224.444818l-21.223371-51.715849-65.460898 15.176654c-9.359158-12.892635-20.686135-24.357757-33.805944-34.208103L849.910545 88.242763l-51.579749-21.579481L762.962264 123.342166c-16.164145-2.550079-32.328289-2.598174-48.086182-0.309038l-35.103496-56.776098-51.715849 21.089317 14.193257 65.281819c-12.896728 9.402137-24.490787 20.819165-34.342156 34.028001l-64.787562-15.315824-21.537526 51.53677 56.015781 36.173874c-2.509147 16.163121-2.509147 32.376385-0.14224 48.313356l-56.676837 34.967396 21.174252 51.80283 65.324798-14.236236c9.494235 12.847609 20.825304 24.312732 33.986045 34.072003l-15.310707 65.146743 51.532677 21.4925 36.397978-56.504922c16.078187 2.413979 32.283264 2.369977 47.952128-0.092098l35.95591 57.042157 51.667753-21.224394-15.176654-65.546855c12.713556-9.402137 24.173562-20.690228 33.845853-33.715893L933.863608 395.431098 933.863608 395.431098zM708.201056 355.673605c-39.667441-16.612353-58.428737-62.191434-41.814338-101.994975 16.609283-39.666418 62.276369-58.33664 101.991905-41.729403 39.71656 16.660448 58.429761 62.235436 41.816384 101.994975C793.584702 353.572758 747.918639 372.284935 708.201056 355.673605L708.201056 355.673605zM650.57766 699.356109 650.57766 626.286929l-86.948281-14.235213c-5.14723-20.549012-13.20679-39.937594-23.907503-57.671491l50.682309-72.263837-51.66673-51.624774-71.28965 51.311643c-17.815761-10.789741-37.251416-18.98233-58.027601-24.12956l-15.131629-86.550215-73.071226 0-14.056134 86.279039c-20.777209 5.060249-40.343847 13.161764-58.164724 23.865547l-71.098291-50.728358-51.714825 51.623751 50.008974 71.502497c-10.785647 17.913998-19.027355 37.430494-24.222681 58.341756l-85.872786 14.284331 0 73.070202 85.786829 15.175631c5.195326 20.86726 13.387915 40.432875 24.269753 58.384735l-50.727335 70.878281 51.667753 51.714825 71.637574-50.15019c17.907858 10.747785 37.382399 18.896372 58.158584 24.000624l14.332427 86.328158 73.112158 0 15.358803-86.551238c20.639063-5.194302 40.116673-13.429871 57.846476-24.220634l72.091922 50.639331 51.671846-51.714825-51.445696-71.458495c10.655687-17.773805 18.757203-37.117362 23.818475-57.759495l86.904279-15.266705L650.57766 699.356109zM358.378715 765.308193c-56.282864 0-101.905948-45.624107-101.905948-101.903901 0-56.278771 45.627177-101.858876 101.905948-101.858876 56.278771 0 101.859899 45.623084 101.859899 101.858876C460.238614 719.684086 414.657486 765.308193 358.378715 765.308193L358.378715 765.308193zM358.378715 765.308193" fill="#555555"></path></svg>
+                <div>
+                    <span class="stat">Total Momentum: </span>
+                    <span class="stat-value">0</span>
+                </div>
+                <div>
+                    <span class="stat">Hits: </span>
+                    <span class="stat-value">0</span>
+                </div>
+                <div>
+                    <span class="stat">Count: </span>
+                    <span class="stat-value">0</span>
+                </div>
+                <div id="buttons">
+                    <button id="switch-progress">Start</button>
+                    <button id="switch-mode">Remove</button>
+                    <button onclick="ctHeat();">Heat</button>
+                    <button onclick="ctCool();">Cool</button>
+                    <button onclick="ctClear();">Reset</button>
+                    <button id="switch-velocity">Show Velocities</button>
+                </div>
+            </div>
+            <div id="synthesizer">
+                <svg viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" width="200" height="200"><path d="M287 385 287 832c0 17.672 15.702 33 33.376 33l416 0c17.672 0 30.624-15.328 30.624-33L767 385 287 385zM719 688c0 8.836-7.164 16-16 16s-16-7.164-16-16l0-96c0-8.836 7.164-16 16-16s16 7.164 16 16L719 688zM704.376 544c-8.836 0-16-7.162-16-16s7.164-16 16-16 16 7.162 16 16S713.21 544 704.376 544z" fill="#f41b7a"></path><path d="M890.156 65 256.876 65c-108.69 0-129.188 54.852-129.188 79.5C188.188 153 191 154 191 218c0 32 0 614 0 614 0 70.692 58.682 129 129.376 129l415.5 0c70.692 0 127.124-58.308 127.124-129 0 0 0-633.5 0-671 0-40.698 24.596-76.552 27.032-80.366 2.438-3.812 6-7.596 6-9.916C896.032 68.376 895.2 65 890.156 65zM799 161 799 832c0 35.84-24.886 65-59.624 65l-419 0c-35.234 0-65.376-29.766-65.376-65L255 218c0-23.624 2.188-74.5-7.656-87.914 1.842-1.586 6.228-1.086 9.032-1.086l545.32 0C800.224 129 799 150.598 799 161z" fill="#f41b7a"></path></svg>
+                <select id="synthesizer-metal">
+                    <option value="H">H</option>
+                    <option value="Li">Li</option>
+                    <option value="Na">Na</option>
+                    <option value="K">K</option>
+                    <option value="Mg">Mg</option>
+                    <option value="Ca">Ca</option>
+                    <option value="Ba">Ba</option>
+                    <option value="Fe">Fe</option>
+                    <option value="Ni">Ni</option>
+                    <option value="Cu">Cu</option>
+                    <option value="Ag">Ag</option>
+                    <option value="Au">Au</option>
+                    <option value="Zn">Zn</option>
+                    <option value="Al">Al</option>
+                    <option value="Pb">Pb</option>
+                </select>
+                <select id="synthesizer-acid">
+                    <option value="">None</option>
+                    <option value="OH">OH</option>
+                    <option value="SO4">SO4</option>
+                    <option value="PO4">PO4</option>
+                    <option value="I">I</option>
+                    <option value="Cl">Cl</option>
+                    <option value="CO3">CO3</option>
+                    <option value="Br">Br</option>
+                    <option value="NO3">NO3</option>
+                    <option value="F">F</option>
+                    <option value="CrO4">CrO4</option>
+                </select>
+                <button id="button-create" class="button-create-inactive">Create</button>
+                <div id="extra-buttons">
+                    <button>Remove Hydrogen</button>
+                    <button>Remove Water</button>
+                </div>
+            </div>
+            <div id="instruction">
+                <svg viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" width="200" height="200"><path d="M170.666667 283.008c5.973333-2.389333 13.141333-5.034667 21.461333-7.722667A416.853333 416.853333 0 0 1 320 256a416.853333 416.853333 0 0 1 127.872 19.285333c8.32 2.688 15.488 5.333333 21.461333 7.722667v464.213333A504.192 504.192 0 0 0 320 725.333333c-62.293333 0-113.024 10.581333-149.333333 21.888V283.008z m341.333333-74.581333c-9.642667-4.266667-22.357333-9.344-37.888-14.378667A502.144 502.144 0 0 0 320 170.666667c-65.109333 0-117.546667 11.562667-154.112 23.381333a379.264 379.264 0 0 0-42.709333 16.597333 251.946667 251.946667 0 0 0-15.232 7.68l-1.066667 0.597334-0.384 0.213333-0.128 0.085333h-0.042667c-0.085333 0.085333-10.538667 6.272-0.085333 0.085334A42.666667 42.666667 0 0 0 85.333333 256v554.666667a42.666667 42.666667 0 0 0 64.426667 36.693333l-0.213333 0.128h0.042666l0.085334-0.042667 0.042666-0.042666 1.578667-0.853334c1.578667-0.853333 4.181333-2.133333 7.765333-3.84 7.253333-3.328 18.346667-8.021333 33.066667-12.8A416.853333 416.853333 0 0 1 320 810.666667a416.853333 416.853333 0 0 1 127.872 19.242666 294.4 294.4 0 0 1 33.066667 12.8 169.642667 169.642667 0 0 1 9.514666 4.778667m0 0h-0.042666l-0.085334-0.042667-0.042666-0.042666c13.397333 7.893333 30.037333 7.893333 43.434666 0l1.578667-0.853334c1.578667-0.853333 4.181333-2.133333 7.765333-3.84a294.4 294.4 0 0 1 33.066667-12.8A416.853333 416.853333 0 0 1 704 810.666667a416.853333 416.853333 0 0 1 127.872 19.242666 294.4 294.4 0 0 1 33.066667 12.8 169.642667 169.642667 0 0 1 9.344 4.693334A42.666667 42.666667 0 0 0 938.666667 810.666667V256a42.666667 42.666667 0 0 0-20.906667-36.693333l-0.085333-0.042667h-0.042667l-0.128-0.128-0.426667-0.213333-1.024-0.597334a251.008 251.008 0 0 0-15.232-7.68 379.605333 379.605333 0 0 0-42.666666-16.597333A502.144 502.144 0 0 0 704 170.666667c-65.066667 0-117.546667 11.562667-154.112 23.381333a388.778667 388.778667 0 0 0-37.888 14.378667m341.333333 74.581333v464.213333A504.192 504.192 0 0 0 704 725.333333c-62.293333 0-113.024 10.581333-149.333333 21.888V283.008c5.973333-2.389333 13.141333-5.034667 21.461333-7.722667A416.853333 416.853333 0 0 1 704 256a416.853333 416.853333 0 0 1 127.872 19.285333c8.32 2.688 15.488 5.333333 21.461333 7.722667z m20.906667 9.728l0.213333 0.085333h-0.042666l-0.128-0.085333z m0 554.666667l0.170667 0.085333-0.085334-0.085333" fill="#ea9518"></path></svg>
+                <ul>
+                    <li>Author: Stanley Jian</li>
+                    <li>Last Updated: 2021/06/05</li>
+                </ul>
+            </div>
+        </div>
+        <div id="selectors">
+            <div id="select-acid">
+                <div id="acid-info">
+                    <span></span>
+                    <svg viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" width="200" height="200"><path d="M321.312 0l384 0 0 64-384 0 0-64z" fill="#16de44"></path><path d="M843.424 1024l-662.848 0-9.376-9.376c-48.352-48.352-75.072-113.152-75.232-182.528-0.128-69.504 26.4-134.368 74.72-182.72l214.624-214.624 0-306.752 64 0 0 333.248-233.376 233.376c-36.192 36.224-56.064 84.96-55.968 137.312 0.096 47.968 16.928 92.928 47.68 128.064l608.672 0c65.728-75.36 63.04-194.048-8.256-265.376l-233.376-233.376 0-333.248 64 0 0 306.752 214.624 214.624c100.576 100.608 100.32 264.448-0.512 365.248l-9.376 9.376z" fill="#16de44"></path><path d="M230.88 874.208c-4.544-13.376-6.848-27.616-6.88-42.368-0.096-35.2 13.152-67.84 37.28-91.968l224.096-224 45.248 45.248-224.096 224c-12 12-18.56 28.544-18.528 46.56 0.032 7.808 1.184 15.264 3.488 22.08l-60.608 20.448z" fill="#16de44"></path></svg>
+                    <span></span>
+                </div>
+                <ul id="acid-list">
+                    <li><div>H<sub>2</sub>SO<sub>4</sub></div></li>
+                    <li><div>HCl</div></li>
+                    <li><div>HNO<sub>3</sub></div></li>
+                    <li><div>H<sub>3</sub>PO<sub>4</sub></div></li>
+                    <li><div>CO<sub>2</sub></div></li>
+                    <li><div>HF</div></li>
+                    <li><div>HI</div></li>
+                    <li><div>HBr</div></li>
+                    <li><div>H<sub>2</sub>CrO<sub>4</sub></div></li>
+                </ul>
+            </div>
+            <div id="select-metal">
+                <div id="metal-info">
+                    <svg viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" width="200" height="200"><path d="M805.2128 484.672c-0.768-2.24-0.768-3.008-1.536-3.776-14.4-30.336-29.568-60.736-43.968-91.072-2.304-5.312-6.08-5.312-10.624-3.84-31.168 9.152-62.272 17.472-93.44 25.856-4.48 1.536-7.552 3.84-8.32 8.32-6.784 22.784-13.632 44.8-20.48 67.584-3.008 10.624-6.08 22.016-9.856 33.408 63.744-12.16 126.016-24.32 188.224-36.48zM347.5488 136.32c2.24 2.24 3.776 3.008 4.48 4.544L629.9808 361.728c2.24 2.304 7.552 3.072 11.328 2.304 21.312-5.312 42.56-11.392 63.808-17.472 3.008-0.768 6.08-2.304 10.624-3.008-22.784-17.472-44.032-33.408-65.28-50.112-73.6-56.96-147.264-113.088-220.864-170.048-2.304-1.472-6.08-3.84-8.32-3.84-24.32 4.608-47.872 10.688-73.664 16.768z m219.328 373.44c1.536-3.84 3.072-6.08 3.072-8.32 9.088-29.632 17.408-60.032 27.328-89.6 3.008-8.32 0.704-12.16-6.08-17.472-77.44-61.44-154.88-122.944-231.552-183.68-19.712-15.936-39.424-31.104-59.2-47.04-1.472 2.24-2.24 4.544-3.008 6.848-11.392 28.032-22.784 56.128-34.944 84.224-3.008 6.848-2.24 10.624 3.84 15.168 81.216 64.512 162.432 129.792 243.648 195.072 18.944 14.4 37.12 29.632 56.96 44.8z m-114.56-434.944c19.712 14.464 219.328 170.048 330.112 255.808 4.608 3.84 8.32 8.32 10.624 12.928 23.552 48.576 47.872 97.152 70.592 146.496 8.32 18.176 1.536 34.112-21.248 37.888-32.64 6.08-66.048 12.928-98.624 19.008-40.96 7.616-81.984 15.168-122.24 23.552-11.392 2.24-22.016 3.776-33.408 6.784-9.856 3.072-16.64-0.704-23.488-6.016l-112.384-89.6C373.3408 418.688 295.1328 355.648 216.2208 292.672c-12.928-10.624-15.168-19.008-9.088-34.176 18.944-45.504 37.952-91.84 56.128-137.344a36.096 36.096 0 0 1 28.8-25.088c32-6.784 92.672-22.016 124.544-28.8 10.624-2.304 13.632-3.84 21.248-2.304 6.08 2.304 9.856 6.848 14.4 9.856z m-32.64 752.96c65.984-12.864 130.56-25.792 195.008-38.72-16.64-43.264-32.64-84.992-49.28-126.72a3678.72 3678.72 0 0 0-108.544 32.64 10.24 10.24 0 0 0-6.848 6.784c-9.856 40.96-19.776 82.752-30.4 126.08z m-47.872-13.632c2.304-9.92 3.84-19.008 6.08-27.328l22.784-95.68c1.536-4.48 0-6.784-3.072-9.856C311.0688 604.608 225.3088 527.232 139.5488 450.56c-11.392-9.856-22.784-20.48-34.88-31.104-16 38.656-31.168 76.608-46.336 114.56-0.768 2.304 1.536 6.848 3.072 9.152 12.864 12.16 26.56 23.488 40.192 35.648l215.552 188.224c18.24 14.464 35.712 30.4 54.656 47.104zM144.0928 387.52c13.696 12.16 25.856 23.552 38.72 34.944 44.032 39.488 88.832 78.912 132.864 119.168 37.952 34.176 76.608 68.288 114.56 103.232 3.84 3.008 6.848 3.84 12.16 2.24 40.96-12.16 81.984-24.96 123.712-36.416 22.784-6.848 32.64-0.768 40.96 19.776 21.312 55.36 42.56 110.08 63.808 165.44 7.616 19.712 0 34.176-20.48 38.72-72.896 14.4-144.96 28.8-217.856 43.264-14.4 3.008-28.096 6.08-42.496 8.32-7.616 1.536-14.4-1.472-20.48-6.784L230.6208 758.72c-59.264-51.648-117.696-103.232-176.896-154.112-14.4-12.16-28.096-24.32-42.496-37.12-12.16-10.688-13.696-19.008-7.616-34.176 22.016-53.952 44.032-107.84 65.28-160.96a33.6 33.6 0 0 1 21.248-20.48c30.4-9.088 60.736-18.944 91.072-28.096 11.392-3.84 22.016-3.008 30.4 6.848 12.16 13.632 6.08 34.176-12.16 40.96-14.4 5.312-29.568 9.152-44.032 13.696-3.008-0.768-6.848 0.768-11.392 2.24z m629.248 371.2c62.976-12.928 125.248-26.56 187.52-39.488-20.48-37.184-40.32-72.832-59.968-108.544-0.768-2.24-5.376-3.84-8.384-3.008-28.096 5.312-56.96 11.392-84.992 16.64-6.08 1.536-8.32 3.84-9.856 9.92-4.608 23.552-9.92 47.808-14.464 71.36-3.008 16.64-6.08 34.112-9.856 53.12z m138.88-205.696c11.392 0 18.24 6.08 23.552 15.936 22.784 40.96 45.568 82.752 68.288 123.712 5.312 9.856 10.624 19.008 16 28.8 9.856 19.008 1.472 36.48-19.008 40.32-62.272 12.8-124.48 26.496-186.752 39.424-23.488 5.312-47.808 11.392-71.296 14.4-14.464 2.304-29.632-12.864-26.56-29.568l31.872-156.352c2.24-9.856 3.776-19.008 5.312-28.864 2.24-12.928 10.624-19.712 23.488-22.784 34.176-6.784 68.352-13.632 103.232-20.48 10.624-0.768 21.248-2.304 31.872-4.544z" fill="#0f64b8"></path></svg>
+                    <div id="metal-info-list">
+                        <h2><wbr></h2>
+                        <h3><wbr></h3>
+                        <ul>
+                            <li><span>Atomic Number: </span><span><wbr></span></li>
+                            <li><span>Most Common Isotope: </span><span><wbr></span></li>
+                            <li><span>Protons: </span><span><wbr></span></li>
+                            <li><span>Neutrons: </span><span><wbr></span></li>
+                            <li><span>Atomic Mass (Weighted): </span><span><wbr></span></li>
+                            <li><span>Category: </span><span><wbr></span></li>
+                            <li><span>Group: </span><span><wbr></span></li>
+                            <li><span>Period: </span><span><wbr></span></li>
+                            <li><span>Simulated Oxidization State (Valence): </span><span><wbr></span></li>
+                        </ul>
+                    </div>
+                </div>
+                <table id="periodic-table">
+                    <tr>
+                        <td class="element-locked">1<br>H</td>
+                        <td class="element-empty"></td>
+                        <td class="element-empty"></td>
+                        <td class="element-empty"></td>
+                        <td class="element-empty"></td>
+                        <td class="element-empty"></td>
+                        <td class="element-empty"></td>
+                        <td class="element-empty"></td>
+                        <td class="element-empty"></td>
+                        <td class="element-empty"></td>
+                        <td class="element-empty"></td>
+                        <td class="element-empty"></td>
+                        <td class="element-empty"></td>
+                        <td class="element-empty"></td>
+                        <td class="element-empty"></td>
+                        <td class="element-empty"></td>
+                        <td class="element-empty"></td>
+                        <td class="element-locked">2<br>He</td>
+                    </tr>
+                    <tr>
+                        <td>3<br>Li</td>
+                        <td class="element-locked">4<br>Be</td>
+                        <td class="element-empty"></td>
+                        <td class="element-empty"></td>
+                        <td class="element-empty"></td>
+                        <td class="element-empty"></td>
+                        <td class="element-empty"></td>
+                        <td class="element-empty"></td>
+                        <td class="element-empty"></td>
+                        <td class="element-empty"></td>
+                        <td class="element-empty"></td>
+                        <td class="element-empty"></td>
+                        <td class="element-locked">5<br>B</td>
+                        <td class="element-locked">6<br>C</td>
+                        <td class="element-locked">7<br>N</td>
+                        <td class="element-locked">8<br>O</td>
+                        <td class="element-locked">9<br>F</td>
+                        <td class="element-locked">10<br>Ne</td>
+                    </tr>
+                    <tr>
+                        <td>11<br>Na</td>
+                        <td>12<br>Mg</td>
+                        <td class="element-empty"></td>
+                        <td class="element-empty"></td>
+                        <td class="element-empty"></td>
+                        <td class="element-empty"></td>
+                        <td class="element-empty"></td>
+                        <td class="element-empty"></td>
+                        <td class="element-empty"></td>
+                        <td class="element-empty"></td>
+                        <td class="element-empty"></td>
+                        <td class="element-empty"></td>
+                        <td>13<br>Al</td>
+                        <td class="element-locked">14<br>Si</td>
+                        <td class="element-locked">15<br>P</td>
+                        <td class="element-locked">16<br>S</td>
+                        <td class="element-locked">17<br>Cl</td>
+                        <td class="element-locked">18<br>Ar</td>
+                    </tr>
+                    <tr>
+                        <td>19<br>K</td>
+                        <td>20<br>Ca</td>
+                        <td class="element-locked">21<br>Sc</td>
+                        <td class="element-locked">22<br>Ti</td>
+                        <td class="element-locked">23<br>V</td>
+                        <td class="element-locked">24<br>Cr</td>
+                        <td class="element-locked">25<br>Mn</td>
+                        <td>26<br>Fe</td>
+                        <td class="element-locked">27<br>Co</td>
+                        <td>28<br>Ni</td>
+                        <td>29<br>Cu</td>
+                        <td>30<br>Zn</td>
+                        <td class="element-locked">31<br>Ga</td>
+                        <td class="element-locked">32<br>Ge</td>
+                        <td class="element-locked">33<br>As</td>
+                        <td class="element-locked">34<br>Se</td>
+                        <td class="element-locked">35<br>Br</td>
+                        <td class="element-locked">36<br>Kr</td>
+                    </tr>
+                    <tr>
+                        <td class="element-locked">37<br>Rb</td>
+                        <td class="element-locked">38<br>Sr</td>
+                        <td class="element-locked">39<br>Y</td>
+                        <td class="element-locked">40<br>Zr</td>
+                        <td class="element-locked">41<br>Nb</td>
+                        <td class="element-locked">42<br>Mo</td>
+                        <td class="element-locked">43<br>Tc</td>
+                        <td class="element-locked">44<br>Ru</td>
+                        <td class="element-locked">45<br>Rh</td>
+                        <td class="element-locked">46<br>Pd</td>
+                        <td>47<br>Ag</td>
+                        <td class="element-locked">48<br>Cd</td>
+                        <td class="element-locked">49<br>In</td>
+                        <td class="element-locked">50<br>Sn</td>
+                        <td class="element-locked">51<br>Sb</td>
+                        <td class="element-locked">52<br>Te</td>
+                        <td class="element-locked">53<br>I</td>
+                        <td class="element-locked">54<br>Xe</td>
+                    </tr>
+                    <tr>
+                        <td class="element-locked">55<br>Cs</td>
+                        <td>56<br>Ba</td>
+                        <td class="element-locked">71<br>Lu</td>
+                        <td class="element-locked">72<br>Hf</td>
+                        <td class="element-locked">73<br>Ta</td>
+                        <td class="element-locked">74<br>W</td>
+                        <td class="element-locked">75<br>Re</td>
+                        <td class="element-locked">76<br>Os</td>
+                        <td class="element-locked">77<br>Ir</td>
+                        <td class="element-locked">78<br>Pt</td>
+                        <td>79<br>Au</td>
+                        <td class="element-locked">80<br>Hg</td>
+                        <td class="element-locked">81<br>Tl</td>
+                        <td>82<br>Pb</td>
+                        <td class="element-locked">83<br>Bi</td>
+                        <td class="element-locked">84<br>Po</td>
+                        <td class="element-locked">85<br>At</td>
+                        <td class="element-locked">86<br>Rn</td>
+                    </tr>
+                    <tr>
+                        <td class="element-locked">87<br>Fr</td>
+                        <td class="element-locked">88<br>Ra</td>
+                        <td class="element-locked">103<br>Lr</td>
+                        <td class="element-locked">104<br>Rf</td>
+                        <td class="element-locked">105<br>Db</td>
+                        <td class="element-locked">106<br>Sg</td>
+                        <td class="element-locked">107<br>Bh</td>
+                        <td class="element-locked">108<br>Hs</td>
+                        <td class="element-locked">109<br>Mt</td>
+                        <td class="element-locked">110<br>Ds</td>
+                        <td class="element-locked">111<br>Rg</td>
+                        <td class="element-locked">112<br>Cn</td>
+                        <td class="element-locked">113<br>Nh</td>
+                        <td class="element-locked">114<br>Fl</td>
+                        <td class="element-locked">115<br>Mc</td>
+                        <td class="element-locked">116<br>Lv</td>
+                        <td class="element-locked">117<br>Ts</td>
+                        <td class="element-locked">118<br>Og</td>
+                    </tr>
+                    <tr>
+                        <td class="element-empty"></td>
+                        <td class="element-empty"></td>
+                        <td class="element-locked">57<br>La</td>
+                        <td class="element-locked">58<br>Ce</td>
+                        <td class="element-locked">59<br>Pr</td>
+                        <td class="element-locked">60<br>Nd</td>
+                        <td class="element-locked">61<br>Pm</td>
+                        <td class="element-locked">62<br>Sm</td>
+                        <td class="element-locked">63<br>Eu</td>
+                        <td class="element-locked">64<br>Gd</td>
+                        <td class="element-locked">65<br>Tb</td>
+                        <td class="element-locked">66<br>Dy</td>
+                        <td class="element-locked">67<br>Ho</td>
+                        <td class="element-locked">68<br>Er</td>
+                        <td class="element-locked">69<br>Tm</td>
+                        <td class="element-locked">70<br>Yb</td>
+                        <td class="element-empty"></td>
+                        <td class="element-empty"></td>
+                    </tr>
+                    <tr>
+                        <td class="element-empty"></td>
+                        <td class="element-empty"></td>
+                        <td class="element-locked">89<br>Ac</td>
+                        <td class="element-locked">90<br>Th</td>
+                        <td class="element-locked">91<br>Pa</td>
+                        <td class="element-locked">92<br>U</td>
+                        <td class="element-locked">93<br>Np</td>
+                        <td class="element-locked">94<br>Pu</td>
+                        <td class="element-locked">95<br>Am</td>
+                        <td class="element-locked">96<br>Cm</td>
+                        <td class="element-locked">97<br>Bk</td>
+                        <td class="element-locked">98<br>Cf</td>
+                        <td class="element-locked">99<br>Es</td>
+                        <td class="element-locked">100<br>Fm</td>
+                        <td class="element-locked">101<br>Md</td>
+                        <td class="element-locked">102<br>No</td>
+                        <td class="element-empty"></td>
+                        <td class="element-empty"></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <script src="chemtail.js"></script>
+    </body>
+</html>
